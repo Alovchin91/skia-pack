@@ -14,8 +14,11 @@ on:
         required: true
         default: 'false'
 
+permissions:
+  contents: write
+
 env:
-  version: m126-6bfb13368b
+  version: m126-6fd3120c1b
 
 jobs:
   windows:

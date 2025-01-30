@@ -90,8 +90,10 @@ def main():
     if 'windows' == host:
       clang_path = shutil.which('clang-cl.exe')
       if clang_path != None:
+        llvm_path = os.path.dirname(os.path.dirname(clang_path))
         args += [
-          'clang_win="' + os.path.dirname(os.path.dirname(clang_path)) + '"',
+          'clang_win="' + llvm_path + '"',
+          # 'is_trivial_abi=false',
         ]
   elif 'android' == target:
     args += [

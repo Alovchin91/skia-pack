@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-import common, os, subprocess, sys
+import common, os, shutil, subprocess, sys
 
 def main():
   os.chdir(os.path.join(os.path.dirname(__file__), os.pardir, 'skia'))
@@ -83,9 +83,18 @@ def main():
         ]
   elif 'windows' == target:
     args += [
+      'skia_use_angle=true',
       'skia_use_direct3d=true',
       'extra_cflags=["-DSK_FONT_HOST_USE_SYSTEM_SETTINGS"]',
     ]
+    if 'windows' == host:
+      clang_path = shutil.which('clang-cl.exe')
+      if clang_path != None:
+        llvm_path = os.path.dirname(os.path.dirname(clang_path))
+        args += [
+          'clang_win="' + llvm_path + '"',
+          # 'is_trivial_abi=false',
+        ]
   elif 'android' == target:
     args += [
       'ndk="'+ ndk + '"'

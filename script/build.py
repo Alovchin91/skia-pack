@@ -88,11 +88,12 @@ def main():
     ]
     if 'windows' == host:
       clang_path = shutil.which('clang-cl.exe')
-      if clang_path != None:
-        args += [
-          'clang_win="' + os.path.dirname(os.path.dirname(clang_path)) + '"',
-          'is_trivial_abi=false',
-        ]
+      if not clang_path:
+        raise Exception("Please install LLVM from https://releases.llvm.org/, and make sure that clang-cl.exe is available in PATH")
+      args += [
+        'clang_win="' + os.path.dirname(os.path.dirname(clang_path)) + '"',
+        'is_trivial_abi=false',
+      ]
   elif 'android' == target:
     args += [
       'ndk="'+ ndk + '"'
